@@ -1,2 +1,22 @@
-# behat-javascript-context
-Behat Javascript Context
+#Behat HTML Context
+## By [Edmonds Commerce](https://www.edmondscommerce.co.uk)
+
+A simple Behat Context for working with HTML and navigation
+
+### Installation
+
+Install via composer
+
+    "edmondscommerce/behat-javascript-context": "~1.0"
+
+### Include Context in Behat Configuration
+        
+    default:
+        # ...
+        suites:
+            default:
+                # ...
+                contexts:
+                    - # ...
+                    - EdmondsCommerce\BehatJavascriptContext\JavascriptEventsContext
+                    
