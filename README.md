@@ -19,4 +19,5 @@ Install via composer
                 contexts:
                     - # ...
                     - EdmondsCommerce\BehatJavascriptContext\JavascriptEventsContext
+                    - EdmondsCommerce\BehatJavascriptContext\CookieContext
                     
