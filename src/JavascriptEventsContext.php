@@ -26,6 +26,7 @@ class JavascriptEventsContext extends RawMinkContext implements Context, Snippet
     /**
      * @Then I wait for the document ready event
      * @Then I wait for the page to fully load
+     * @Then I wait for the page to reload
      */
     public function iWaitForDocumentReady()
     {
@@ -49,11 +50,5 @@ class JavascriptEventsContext extends RawMinkContext implements Context, Snippet
         $this->getSession()->wait(5000, 'jQuery("' . $arg1 . '").is(\':visible\')');
     }
 
-    /**
-     * @Given I disable the alerts
-     */
-    public function iDisableTheAlerts()
-    {
-        $this->getSession()->wait(5000, 'window.alert = function() {}');
-    }
+    
 }
