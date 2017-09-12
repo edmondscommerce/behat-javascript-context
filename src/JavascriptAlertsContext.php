@@ -1,7 +1,9 @@
 <?php namespace EdmondsCommerce\BehatJavascriptContext;
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Exception;
+use WebDriver\Exception\NoAlertOpenError;
 
 class JavascriptAlertsContext extends RawMinkContext
 {
@@ -45,5 +47,30 @@ class JavascriptAlertsContext extends RawMinkContext
         $this->getSession()->getDriver()->getWebDriverSession()->accept_alert();
     }
 
+    /**
+     * @Then /^I press button "([^"]*)" should see an alert saying "([^"]*)"$/
+     */
+    public function iPressButtonShouldSeeAnAlertSaying($button, $arg1)
+    {
+        $this->getSession()->getPage()->pressButton($button);
+        $text = false;
+        $ticker = 0;
+        while ($text === false) {
+            try {
+                $text = $this->getSession()->getDriver()->getWebDriverSession()->getAlert_text();
+            } catch (NoAlertOpenError $e) {
+                sleep(1);
+            }
+            $ticker++;
+            if($ticker > 10) {
+                $text='fail test';
+            }
+        }
+        $this->iAcceptThePopup();
+        if ($arg1 != $text)
+        {
+            throw new Exception('The alert\'s text "' . $text . '" does not equal' . $arg1);
+        }
+    }
 
 }
