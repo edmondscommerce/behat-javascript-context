@@ -44,4 +44,9 @@ class JavascriptAlertsContextTest extends AbstractTestCase
         $this->seleniumSession->stop();
         $this->server->stopServer();
     }
+
+    public function testCancelThePopupWillCancelThePopup() {
+
+
+    }
 }
