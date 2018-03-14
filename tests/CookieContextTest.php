@@ -54,4 +54,16 @@ class CookieContextTest extends AbstractTestCase
 
         $this->assertEquals('selenium2', $this->seleniumSession->getCookie('testCookie'));
     }
+
+    public function testDeleteTheCookieWillDeleteTheCookie() {
+        $url = $this->server->getUrl('/');
+
+        $this->seleniumSession->visit($url);
+
+        $this->context->iSetCookieValue('testCookie', 'selenium2');
+
+        $this->context->iDeleteTheCookie('testCookie');
+        
+        $this->assertNull($this->seleniumSession->getCookie('testCookie'));
+    }
 }
