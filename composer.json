@@ -18,11 +18,26 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "behat/behat": "~3.0"
+        "behat/behat": "~3.0",
+        "behat/mink": "~1.6",
+        "behat/mink-extension": "~2.0"
     },
     "autoload": {
         "psr-4": {
             "EdmondsCommerce\\BehatJavascriptContext\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EdmondsCommerce\\BehatJavascriptContext\\": "tests/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "require-dev": {
+        "edmondscommerce/mock-server": "dev-master",
+        "edmondscommerce/phpqa": "dev-master",
+        "behat/mink-selenium2-driver": "^1.3@dev"
     }
 }
