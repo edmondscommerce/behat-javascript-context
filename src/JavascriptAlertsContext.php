@@ -26,8 +26,10 @@ class JavascriptAlertsContext extends RawMinkContext
         $text = $this->getSession()->getDriver()->getWebDriverSession()->getAlert_text();
         if ($arg1 != $text)
         {
-            throw new Exception('The alert\'s text "' . $text . '" does not equal' . $arg1);
+            throw new Exception('The alert\'s text "' . $text . '" does not equal ' . $arg1);
         }
+
+        return $text;
     }
 
     /**
@@ -35,7 +37,7 @@ class JavascriptAlertsContext extends RawMinkContext
      */
     public function iDisableTheAlerts()
     {
-        $this->getSession()->wait(5000, 'window.alert = function() {}');
+        $this->getSession()->wait(2000, 'window.alert = function() {}');
     }
 
     /**
@@ -53,24 +55,8 @@ class JavascriptAlertsContext extends RawMinkContext
     public function iPressButtonShouldSeeAnAlertSaying($button, $arg1)
     {
         $this->getSession()->getPage()->pressButton($button);
-        $text = false;
-        $ticker = 0;
-        while ($text === false) {
-            try {
-                $text = $this->getSession()->getDriver()->getWebDriverSession()->getAlert_text();
-            } catch (NoAlertOpenError $e) {
-                sleep(1);
-            }
-            $ticker++;
-            if($ticker > 10) {
-                $text='fail test';
-            }
-        }
-        $this->iAcceptThePopup();
-        if ($arg1 != $text)
-        {
-            throw new Exception('The alert\'s text "' . $text . '" does not equal' . $arg1);
-        }
+
+        return $this->iShouldSeeAnAlertAsking($arg1);
     }
 
 }
