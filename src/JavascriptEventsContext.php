@@ -16,21 +16,13 @@ class JavascriptEventsContext extends RawMinkContext implements Context, Snippet
     }
 
     /**
-     * @Then /^I wait for AJAX Content to load$/
-     */
-    public function iWaitForAjaxContentToLoad()
-    {
-        $this->getSession()->wait(5000);
-    }
-
-    /**
      * @Then I wait for the document ready event
      * @Then I wait for the page to fully load
      * @Then I wait for the page to reload
      */
     public function iWaitForDocumentReady()
     {
-        $this->getSession()->wait(10000, '("complete" === document.readyState)');
+        return $this->getSession()->wait(10000, '("complete" === document.readyState)');
     }
 
     /**
@@ -39,7 +31,7 @@ class JavascriptEventsContext extends RawMinkContext implements Context, Snippet
     public function iWaitForJQuery()
 
     {
-        $this->getSession()->wait(5000, 'typeof window.jQuery == "function"');
+        return $this->getSession()->wait(5000, 'typeof window.jQuery == "function"');
     }
 
     /**
@@ -47,7 +39,18 @@ class JavascriptEventsContext extends RawMinkContext implements Context, Snippet
      */
     public function iWaitForElementToBeVisible($arg1)
     {
-        $this->getSession()->wait(5000, 'jQuery("' . $arg1 . '").is(\':visible\')');
+        $script = <<<JS
+(function() {
+    function isVisible(e) {
+        return !!( e.offsetWidth || e.offsetHeight || e.getClientRects().length );
+    }
+    
+    return isVisible(document.querySelector('$arg1'));
+})();
+JS;
+
+
+        return $this->getSession()->wait(5000, $script);
     }
 
     
