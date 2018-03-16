@@ -52,6 +52,14 @@ class JavascriptEventsContextTest extends AbstractTestCase
         $this->assertTrue($this->context->iWaitForDocumentReady());
     }
 
+    public function testWaitForDocumentReadyShouldFailToFullyLoadThePageWithin10s() {
+        $url = $this->server->getUrl('/slow-loading-js-host');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertTrue($this->context->iWaitForDocumentReady());
+    }
+
     public function testWaitForElementToBeVisibleWillBeVisible() {
         $url = $this->server->getUrl('/');
 
@@ -63,7 +71,7 @@ class JavascriptEventsContextTest extends AbstractTestCase
     }
 
     public function testWaitForElementToBeVisibleWillNotBeVisible() {
-        $url = $this->server->getUrl('/jquery-mock');
+        $url = $this->server->getUrl('/jquery');
 
         $this->seleniumSession->visit($url);
 
@@ -81,10 +89,42 @@ class JavascriptEventsContextTest extends AbstractTestCase
     }
 
     public function testWaitForJQueryShouldFindJquery() {
-        $url = $this->server->getUrl('/jquery-mock');
+        $url = $this->server->getUrl('/jquery');
 
         $this->seleniumSession->visit($url);
 
         $this->assertTrue($this->context->iWaitForJQuery());
+    }
+
+    public function testWaitForAjaxToFinishQuick() {
+        $url = $this->server->getUrl('/ajax');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertTrue($this->context->iWaitForAjaxToFinish());
+    }
+
+    public function testWaitForAjaxToFinishWillFailToLoadAjaxContentIn10s() {
+        $url = $this->server->getUrl('/ajax-slow');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertFalse($this->context->iWaitForAjaxToFinish());
+    }
+
+    public function testWaitForJqueryAjaxToFinish() {
+        $url = $this->server->getUrl('/jquery-ajax');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertTrue($this->context->iWaitForJqueryAjaxToFinish());
+    }
+
+    public function testWaitForJqueryAjaxToFinishWillFailToLoadAjaxContentIn10s() {
+        $url = $this->server->getUrl('/jquery-ajax-slow');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertFalse($this->context->iWaitForJqueryAjaxToFinish());
     }
 }

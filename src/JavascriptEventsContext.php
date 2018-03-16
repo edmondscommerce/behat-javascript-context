@@ -2,20 +2,76 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\BeforeStepScope;
 use Behat\MinkExtension\Context\RawMinkContext;
 
 class JavascriptEventsContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
+    /** @BeforeStep */
+    public function beforeStep(BeforeStepScope $scope)
+    {
+        $script = <<<JS
+    (function() {
+        window.XMLHttpRequest.pendingAjaxRequests = 0;
+        
+var open = window.XMLHttpRequest.prototype.open,  
+  send = window.XMLHttpRequest.prototype.send;
+
+function openReplacement(method, url, async, user, password) {  
+  this._url = url;
+  return open.apply(this, arguments);
+}
+
+function sendReplacement(data) {  
+  if(this.onreadystatechange) {
+    this._onreadystatechange = this.onreadystatechange;
+  }
+ 
+    window.XMLHttpRequest.pendingAjaxRequests = 1;
+  
+  this.onreadystatechange = onReadyStateChangeReplacement;
+  return send.apply(this, arguments);
+}
+
+function onReadyStateChangeReplacement() {
+    if (this.readyState === 4) {
+        window.XMLHttpRequest.pendingAjaxRequests = 0;
+    }
+    
+  console.log('Ready state changed to: ', this.readyState);
+  
+  if(this._onreadystatechange) {
+    return this._onreadystatechange.apply(this, arguments);
+  }
+}
+
+window.XMLHttpRequest.prototype.open = openReplacement;  
+window.XMLHttpRequest.prototype.send = sendReplacement;
+    })();
+JS;
+        $this->getSession()->executeScript($script);
+    }
+
     /**
      * @Then /^I wait for AJAX to finish$/
      */
     public function iWaitForAjaxToFinish()
     {
-        $this->getSession()->wait(10000, '((0 === Ajax.activeRequestCount) && (0 === jQuery.active))');
-        $this->getSession()->wait(1000);
+        return $this->getSession()->wait(10000, "0 === window.XMLHttpRequest.pendingAjaxRequests");
+    }
+
+    public function iWaitForJqueryAjaxToFinish() {
+        return $this->getSession()->wait(10000, "0 === jQuery.active");
+    }
+
+    public function iWaitForPrototypeJsAjaxToFinish() {
+        return $this->getSession()->wait(10000, "0 === Ajax.activeRequestCount");
     }
 
     /**
+     * Selenium Web Driver will execute second parameter of wait() method only when document is loaded anyways
+     * Therefore method cannot be tested for failure
+     *
      * @Then I wait for the document ready event
      * @Then I wait for the page to fully load
      * @Then I wait for the page to reload
