@@ -10,6 +10,10 @@ class JavascriptEventsContext extends RawMinkContext implements Context, Snippet
     /** @BeforeStep */
     public function beforeStep(BeforeStepScope $scope)
     {
+        $this->initializePendingAjaxRequestsVariable();
+    }
+
+    public function initializePendingAjaxRequestsVariable() {
         $script = <<<JS
     (function() {
         window.XMLHttpRequest.pendingAjaxRequests = 0;

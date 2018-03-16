@@ -101,6 +101,8 @@ class JavascriptEventsContextTest extends AbstractTestCase
 
         $this->seleniumSession->visit($url);
 
+        $this->context->initializePendingAjaxRequestsVariable();
+
         $this->assertTrue($this->context->iWaitForAjaxToFinish());
     }
 
@@ -108,6 +110,8 @@ class JavascriptEventsContextTest extends AbstractTestCase
         $url = $this->server->getUrl('/ajax-slow');
 
         $this->seleniumSession->visit($url);
+
+        $this->context->initializePendingAjaxRequestsVariable();
 
         $this->assertFalse($this->context->iWaitForAjaxToFinish());
     }
