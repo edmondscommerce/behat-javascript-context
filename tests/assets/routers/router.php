@@ -2,21 +2,19 @@
 require_once __DIR__ . '/../../../vendor/autoload.php';
 ini_set('display_errors', 1);
 
+function getContainerIp()
+{
+    $commandToExecute = 'ip addr show eth0 | grep "inet\b" | awk \'{print $2}\' | cut -d/ -f1';
+    exec($commandToExecute, $commandOutput, $exitCode);
+
+    return array_pop($commandOutput);
+}
+
 
 $router = new EdmondsCommerce\MockServer\StaticRouter();
 $router->addStaticRoute('/', __DIR__.'/html/test.html');
 $router->addStaticRoute('/alert', __DIR__.'/html/alert.html');
 $router->addStaticRoute('/jquery', __DIR__.'/html/jquery.html');
-
-
-$router->addStaticRoute('/ajax', __DIR__.'/html/ajax.html');
-$router->addStaticRoute('/ajax-slow', __DIR__.'/html/ajax-slow.html');
-$router->addRoute('/ajax-response', 'AJAX TEXT');
-$router->addCallbackRoute('/ajax-slow-response', '', function() {
-    sleep(12);
-    return 'AJAX TEXT';
-});
-
 
 $router->addStaticRoute('/slow-loading-js-host', __DIR__.'/html/slowpage.html');
 $router->addCallbackRoute('/slow-loading-js', '', function() {
@@ -25,14 +23,65 @@ $router->addCallbackRoute('/slow-loading-js', '', function() {
 });
 
 // JQUERY AJAX TESTING
-$router->addStaticRoute('/jquery-ajax', __DIR__.'/html/jquery-ajax.html');
-$router->addStaticRoute('/jquery-ajax-slow', __DIR__.'/html/jquery-ajax-slow.html');
+$router->addCallbackRoute('/jquery-ajax', '', function() {
+    $search = ['IP_ADDRESS'];
+    $replace = [getContainerIp()];
+    $subject = file_get_contents(__DIR__.'/html/jquery-ajax.html');
+
+    return str_replace($search, $replace, $subject);
+});
+$router->addCallbackRoute('/jquery-ajax-slow', '', function() {
+    $search = ['IP_ADDRESS'];
+    $replace = [getContainerIp()];
+    $subject = file_get_contents(__DIR__.'/html/jquery-ajax-slow.html');
+
+    return str_replace($search, $replace, $subject);
+});
 $router->addRoute('/jquery-ajax-response', 'AJAX TEXT');
 $router->addCallbackRoute('/jquery-ajax-slow-response', '', function() {
     sleep(12);
     return 'AJAX TEXT';
 });
 // JQUERY AJAX TESTING
+
+// PROTOTYPE.JS AJAX TESTING
+$router->addCallbackRoute('/prototypejs-ajax', '', function() {
+    $search = ['IP_ADDRESS'];
+    $replace = [getContainerIp()];
+    $subject = file_get_contents(__DIR__.'/html/prototypejs-ajax.html');
+
+    return str_replace($search, $replace, $subject);
+});
+$router->addCallbackRoute('/prototypejs-ajax-slow', '', function() {
+    $search = ['IP_ADDRESS'];
+    $replace = [getContainerIp()];
+    $subject = file_get_contents(__DIR__.'/html/prototypejs-ajax-slow.html');
+
+    return str_replace($search, $replace, $subject);
+});
+$router->addRoute('/prototypejs-ajax-response', 'AJAX TEXT');
+$router->addCallbackRoute('/prototypejs-ajax-slow-response', '', function() {
+    sleep(12);
+    return 'AJAX TEXT';
+});
+// PROTOTYPE.JS AJAX TESTING
+
+// JQUERY AND PROTOTYPE.JS AJAX TESTING
+$router->addCallbackRoute('/jquery-and-prototypejs-ajax', '', function() {
+    $search = ['IP_ADDRESS'];
+    $replace = [getContainerIp()];
+    $subject = file_get_contents(__DIR__.'/html/jquery-and-prototypejs-ajax.html');
+
+    return str_replace($search, $replace, $subject);
+});
+$router->addCallbackRoute('/jquery-and-prototypejs-ajax-slow', '', function() {
+    $search = ['IP_ADDRESS'];
+    $replace = [getContainerIp()];
+    $subject = file_get_contents(__DIR__.'/html/jquery-and-prototypejs-ajax-slow.html');
+
+    return str_replace($search, $replace, $subject);
+});
+// JQUERY AND PROTOTYPE.JS AJAX TESTING
 
 
 $router->addRoute('/admin', 'Admin Login');

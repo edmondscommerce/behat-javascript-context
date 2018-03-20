@@ -12,7 +12,7 @@
 <div id="myDiv">NOT AJAX TEXT</div>
 <script>
     $(document).ready(function() {
-       $.get("http://192.168.124.232:8080/jquery-ajax-response", function (data) {
+       $.get("http://IP_ADDRESS:8080/jquery-ajax-response", function (data) {
             $('#myDiv').html(data);
        });
     });

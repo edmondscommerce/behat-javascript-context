@@ -10,7 +10,7 @@ class JavascriptEventsContext extends RawMinkContext implements Context, Snippet
     /** @BeforeStep */
     public function beforeStep(BeforeStepScope $scope)
     {
-        $this->initializePendingAjaxRequestsVariable();
+        //$this->initializePendingAjaxRequestsVariable();
     }
 
     public function initializePendingAjaxRequestsVariable() {
@@ -57,11 +57,24 @@ JS;
     }
 
     /**
+     * @TODO Add more javascript libraries as required.
      * @Then /^I wait for AJAX to finish$/
      */
     public function iWaitForAjaxToFinish()
     {
-        return $this->getSession()->wait(10000, "0 === window.XMLHttpRequest.pendingAjaxRequests");
+        $response = false;
+
+        // jQuery ajax calls
+        if ($this->getSession()->evaluateScript('typeof jQuery !== "undefined"')) {
+            $response = $this->getSession()->wait(10000, "0 === jQuery.active");
+        }
+
+        // prototype.js ajax calls
+        if ($this->getSession()->evaluateScript('typeof Ajax !== "undefined"')) {
+            $response = $this->getSession()->wait(10000, "0 === Ajax.activeRequestCount");
+        }
+
+        return $response;
     }
 
     public function iWaitForJqueryAjaxToFinish() {

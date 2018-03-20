@@ -96,27 +96,55 @@ class JavascriptEventsContextTest extends AbstractTestCase
         $this->assertTrue($this->context->iWaitForJQuery());
     }
 
-    public function testWaitForAjaxToFinishQuick() {
-        $url = $this->server->getUrl('/ajax');
+    public function testWaitForAjaxToFinishJqueryQuickCallTest() {
+        $url = $this->server->getUrl('/jquery-ajax');
 
         $this->seleniumSession->visit($url);
-
-        $this->context->initializePendingAjaxRequestsVariable();
 
         $this->assertTrue($this->context->iWaitForAjaxToFinish());
     }
 
-    public function testWaitForAjaxToFinishWillFailToLoadAjaxContentIn10s() {
-        $url = $this->server->getUrl('/ajax-slow');
+    public function testWaitForAjaxToFinishJquerySlowCallTestWillFailToLoadIn10s() {
+        $url = $this->server->getUrl('/jquery-ajax-slow');
 
         $this->seleniumSession->visit($url);
-
-        $this->context->initializePendingAjaxRequestsVariable();
 
         $this->assertFalse($this->context->iWaitForAjaxToFinish());
     }
 
-    public function testWaitForJqueryAjaxToFinish() {
+    public function testWaitForAjaxToFinishPrototypeJsQuickCallTest() {
+        $url = $this->server->getUrl('/prototypejs-ajax');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertTrue($this->context->iWaitForAjaxToFinish());
+    }
+
+    public function testWaitForAjaxToFinishPrototypeJsSlowCallTestWillFailToLoadIn10s() {
+        $url = $this->server->getUrl('/prototypejs-ajax-slow');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertFalse($this->context->iWaitForAjaxToFinish());
+    }
+
+    public function testWaitForAjaxToFinishJqueryAndPrototypeJsBothCallsPassesQuick() {
+        $url = $this->server->getUrl('/jquery-and-prototypejs-ajax');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertTrue($this->context->iWaitForAjaxToFinish());
+    }
+
+    public function testWaitForAjaxToFinishJqueryAndPrototypeJsBothCallsFailsToLoadIn20sSlow() {
+        $url = $this->server->getUrl('/jquery-and-prototypejs-ajax-slow');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertFalse($this->context->iWaitForAjaxToFinish());
+    }
+
+    public function testWaitForJqueryAjaxToFinishQuickCall() {
         $url = $this->server->getUrl('/jquery-ajax');
 
         $this->seleniumSession->visit($url);
@@ -124,11 +152,27 @@ class JavascriptEventsContextTest extends AbstractTestCase
         $this->assertTrue($this->context->iWaitForJqueryAjaxToFinish());
     }
 
-    public function testWaitForJqueryAjaxToFinishWillFailToLoadAjaxContentIn10s() {
+    public function testWaitForJqueryAjaxToFinishSlowCall() {
         $url = $this->server->getUrl('/jquery-ajax-slow');
 
         $this->seleniumSession->visit($url);
 
         $this->assertFalse($this->context->iWaitForJqueryAjaxToFinish());
+    }
+
+    public function testWaitForPrototypeJsAjaxToFinishQuickCall() {
+        $url = $this->server->getUrl('/prototypejs-ajax');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertTrue($this->context->iWaitForPrototypeJsAjaxToFinish());
+    }
+
+    public function testWaitForPrototypeJsAjaxToFinishSlowCall() {
+        $url = $this->server->getUrl('/prototypejs-ajax-slow');
+
+        $this->seleniumSession->visit($url);
+
+        $this->assertFalse($this->context->iWaitForPrototypeJsAjaxToFinish());
     }
 }
