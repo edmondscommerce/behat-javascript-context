@@ -30,7 +30,10 @@
     "autoload-dev": {
         "psr-4": {
             "EdmondsCommerce\\BehatJavascriptContext\\": "tests/"
-        }
+        },
+        "files": [
+            "tests/assets/routers/helper.php"
+        ]
     },
     "config": {
         "bin-dir": "bin"
