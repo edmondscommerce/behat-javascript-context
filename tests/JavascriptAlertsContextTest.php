@@ -2,7 +2,6 @@
 
 namespace EdmondsCommerce\BehatJavascriptContext;
 
-
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Mink;
 use EdmondsCommerce\MockServer\MockServer;
@@ -47,7 +46,8 @@ class JavascriptAlertsContextTest extends AbstractTestCase
         $this->server->stopServer();
     }
 
-    public function testCancelThePopupShouldCancelThePopup() {
+    public function testCancelThePopupShouldCancelThePopup()
+    {
         $url = $this->server->getUrl('/alert');
 
         $this->seleniumSession->visit($url);
@@ -59,7 +59,8 @@ class JavascriptAlertsContextTest extends AbstractTestCase
         $this->seleniumSession->getDriver()->getWebDriverSession()->getAlert_text();
     }
 
-    public function testShouldSeeAnAlertAsking() {
+    public function testShouldSeeAnAlertAsking()
+    {
         $url = $this->server->getUrl('/alert');
 
         $this->seleniumSession->visit($url);
@@ -71,7 +72,8 @@ class JavascriptAlertsContextTest extends AbstractTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testShouldSeeAnAlertAskingThatShouldNotMatchAndThrowAnException() {
+    public function testShouldSeeAnAlertAskingThatShouldNotMatchAndThrowAnException()
+    {
         $url = $this->server->getUrl('/alert');
 
         $this->seleniumSession->visit($url);
@@ -86,7 +88,8 @@ class JavascriptAlertsContextTest extends AbstractTestCase
     /**
      * @throws \Exception
      */
-    public function testDisableTheAlertsShouldNotAllowAlertToBeDisplayed() {
+    public function testDisableTheAlertsShouldNotAllowAlertToBeDisplayed()
+    {
         $url = $this->server->getUrl('/');
 
         $this->seleniumSession->visit($url);
@@ -102,7 +105,8 @@ class JavascriptAlertsContextTest extends AbstractTestCase
         $this->seleniumSession->getDriver()->getWebDriverSession()->getAlert_text();
     }
 
-    public function testAcceptThePopupShouldAllowToExecuteAnyJavascriptAfterAcception() {
+    public function testAcceptThePopupShouldAllowToExecuteAnyJavascriptAfterAcception()
+    {
         $url = $this->server->getUrl('/alert');
 
         $this->seleniumSession->visit($url);
@@ -114,7 +118,8 @@ class JavascriptAlertsContextTest extends AbstractTestCase
         $this->assertEquals('ACCEPTED', $alertDiv);
     }
 
-    public function testPressButtonShouldSeeAnAlertSayingWelcome() {
+    public function testPressButtonShouldSeeAnAlertSayingWelcome()
+    {
         $url = $this->server->getUrl('/');
 
         $this->seleniumSession->visit($url);
@@ -125,7 +130,8 @@ class JavascriptAlertsContextTest extends AbstractTestCase
         $this->assertEquals($expected, $this->context->iPressButtonShouldSeeAnAlertSaying($button, $expected));
     }
 
-    public function testPressButtonShouldSeeAnAlertSayingWillThrowNoAlertFoundException() {
+    public function testPressButtonShouldSeeAnAlertSayingWillThrowNoAlertFoundException()
+    {
         $url = $this->server->getUrl('/');
 
         $this->seleniumSession->visit($url);
@@ -138,7 +144,8 @@ class JavascriptAlertsContextTest extends AbstractTestCase
         $this->context->iPressButtonShouldSeeAnAlertSaying($button, $expected);
     }
 
-    public function testPressButtonShouldSeeAnAlertSayingWillThrowButtonNotFoundException() {
+    public function testPressButtonShouldSeeAnAlertSayingWillThrowButtonNotFoundException()
+    {
         $url = $this->server->getUrl('/');
 
         $this->seleniumSession->visit($url);

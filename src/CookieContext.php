@@ -4,7 +4,8 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\RawMinkContext;
 
-class CookieContext extends RawMinkContext implements Context, SnippetAcceptingContext {
+class CookieContext extends RawMinkContext implements Context, SnippetAcceptingContext
+{
 
     /**
      * @Then I set the cookie :cookieName value to :cookieValue
@@ -21,5 +22,4 @@ class CookieContext extends RawMinkContext implements Context, SnippetAcceptingC
     {
         $this->getSession()->setCookie($cookieName, null);
     }
-
 }

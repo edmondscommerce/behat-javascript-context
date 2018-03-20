@@ -2,7 +2,6 @@
 
 namespace EdmondsCommerce\BehatJavascriptContext;
 
-
 use Behat\Mink\Mink;
 use EdmondsCommerce\MockServer\MockServer;
 
@@ -45,7 +44,8 @@ class CookieContextTest extends AbstractTestCase
         $this->server->stopServer();
     }
 
-    public function testSetCookieValueWillSetCookieValue() {
+    public function testSetCookieValueWillSetCookieValue()
+    {
         $url = $this->server->getUrl('/');
 
         $this->seleniumSession->visit($url);
@@ -55,7 +55,8 @@ class CookieContextTest extends AbstractTestCase
         $this->assertEquals('selenium2', $this->seleniumSession->getCookie('testCookie'));
     }
 
-    public function testDeleteTheCookieWillDeleteTheCookie() {
+    public function testDeleteTheCookieWillDeleteTheCookie()
+    {
         $url = $this->server->getUrl('/');
 
         $this->seleniumSession->visit($url);

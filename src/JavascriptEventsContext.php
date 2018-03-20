@@ -7,7 +7,8 @@ use Behat\MinkExtension\Context\RawMinkContext;
 
 class JavascriptEventsContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
-    public function initializePendingAjaxRequestsVariable() {
+    public function initializePendingAjaxRequestsVariable()
+    {
         $script = <<<JS
     (function() {
         window.XMLHttpRequest.pendingAjaxRequests = 0;
@@ -71,11 +72,13 @@ JS;
         return $response;
     }
 
-    public function iWaitForJqueryAjaxToFinish() {
+    public function iWaitForJqueryAjaxToFinish()
+    {
         return $this->getSession()->wait(10000, "0 === jQuery.active");
     }
 
-    public function iWaitForPrototypeJsAjaxToFinish() {
+    public function iWaitForPrototypeJsAjaxToFinish()
+    {
         return $this->getSession()->wait(10000, "0 === Ajax.activeRequestCount");
     }
 
@@ -96,7 +99,6 @@ JS;
      * @Then I wait for jQuery to finish loading
      */
     public function iWaitForJQuery()
-
     {
         return $this->getSession()->wait(5000, 'typeof window.jQuery == "function"');
     }
@@ -119,6 +121,4 @@ JS;
 
         return $this->getSession()->wait(5000, $script);
     }
-
-    
 }

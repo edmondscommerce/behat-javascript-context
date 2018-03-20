@@ -24,8 +24,7 @@ class JavascriptAlertsContext extends RawMinkContext
     public function iShouldSeeAnAlertAsking($arg1)
     {
         $text = $this->getSession()->getDriver()->getWebDriverSession()->getAlert_text();
-        if ($arg1 != $text)
-        {
+        if ($arg1 != $text) {
             throw new Exception('The alert\'s text "' . $text . '" does not equal ' . $arg1);
         }
 
@@ -58,5 +57,4 @@ class JavascriptAlertsContext extends RawMinkContext
 
         return $this->iShouldSeeAnAlertAsking($arg1);
     }
-
 }
