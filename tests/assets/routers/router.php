@@ -1,15 +1,7 @@
-<?php
+<?php namespace EdmondsCommerce\BehatJavascriptContext\assets\routers;
+
 require_once __DIR__ . '/../../../vendor/autoload.php';
 ini_set('display_errors', 1);
-
-function getContainerIp()
-{
-    $commandToExecute = 'ip addr show eth0 | grep "inet\b" | awk \'{print $2}\' | cut -d/ -f1';
-    exec($commandToExecute, $commandOutput, $exitCode);
-
-    return array_pop($commandOutput);
-}
-
 
 $router = new EdmondsCommerce\MockServer\StaticRouter();
 $router->addStaticRoute('/', __DIR__.'/html/test.html');
@@ -25,14 +17,14 @@ $router->addCallbackRoute('/slow-loading-js', '', function() {
 // JQUERY AJAX TESTING
 $router->addCallbackRoute('/jquery-ajax', '', function() {
     $search = ['IP_ADDRESS'];
-    $replace = [getContainerIp()];
+    $replace = [Helper::Helper::getContainerIp()];
     $subject = file_get_contents(__DIR__.'/html/jquery-ajax.html');
 
     return str_replace($search, $replace, $subject);
 });
 $router->addCallbackRoute('/jquery-ajax-slow', '', function() {
     $search = ['IP_ADDRESS'];
-    $replace = [getContainerIp()];
+    $replace = [Helper::getContainerIp()];
     $subject = file_get_contents(__DIR__.'/html/jquery-ajax-slow.html');
 
     return str_replace($search, $replace, $subject);
@@ -47,14 +39,14 @@ $router->addCallbackRoute('/jquery-ajax-slow-response', '', function() {
 // PROTOTYPE.JS AJAX TESTING
 $router->addCallbackRoute('/prototypejs-ajax', '', function() {
     $search = ['IP_ADDRESS'];
-    $replace = [getContainerIp()];
+    $replace = [Helper::getContainerIp()];
     $subject = file_get_contents(__DIR__.'/html/prototypejs-ajax.html');
 
     return str_replace($search, $replace, $subject);
 });
 $router->addCallbackRoute('/prototypejs-ajax-slow', '', function() {
     $search = ['IP_ADDRESS'];
-    $replace = [getContainerIp()];
+    $replace = [Helper::getContainerIp()];
     $subject = file_get_contents(__DIR__.'/html/prototypejs-ajax-slow.html');
 
     return str_replace($search, $replace, $subject);
@@ -69,14 +61,14 @@ $router->addCallbackRoute('/prototypejs-ajax-slow-response', '', function() {
 // JQUERY AND PROTOTYPE.JS AJAX TESTING
 $router->addCallbackRoute('/jquery-and-prototypejs-ajax', '', function() {
     $search = ['IP_ADDRESS'];
-    $replace = [getContainerIp()];
+    $replace = [Helper::getContainerIp()];
     $subject = file_get_contents(__DIR__.'/html/jquery-and-prototypejs-ajax.html');
 
     return str_replace($search, $replace, $subject);
 });
 $router->addCallbackRoute('/jquery-and-prototypejs-ajax-slow', '', function() {
     $search = ['IP_ADDRESS'];
-    $replace = [getContainerIp()];
+    $replace = [Helper::getContainerIp()];
     $subject = file_get_contents(__DIR__.'/html/jquery-and-prototypejs-ajax-slow.html');
 
     return str_replace($search, $replace, $subject);

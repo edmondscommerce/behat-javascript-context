@@ -65,12 +65,12 @@ JS;
         $response = false;
 
         // jQuery ajax calls
-        if ($this->getSession()->evaluateScript('typeof jQuery !== "undefined"')) {
+        if ((bool) $this->getSession()->evaluateScript('typeof jQuery !== "undefined"')) {
             $response = $this->getSession()->wait(10000, "0 === jQuery.active");
         }
 
         // prototype.js ajax calls
-        if ($this->getSession()->evaluateScript('typeof Ajax !== "undefined"')) {
+        if ((bool) $this->getSession()->evaluateScript('typeof Ajax !== "undefined"')) {
             $response = $this->getSession()->wait(10000, "0 === Ajax.activeRequestCount");
         }
 
