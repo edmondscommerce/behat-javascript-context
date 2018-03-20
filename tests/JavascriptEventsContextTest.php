@@ -5,6 +5,12 @@ namespace EdmondsCommerce\BehatJavascriptContext;
 use Behat\Mink\Mink;
 use EdmondsCommerce\MockServer\MockServer;
 
+/**
+ * Class JavascriptEventsContextTest
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ * @package EdmondsCommerce\BehatJavascriptContext
+ */
 class JavascriptEventsContextTest extends AbstractTestCase
 {
     /**

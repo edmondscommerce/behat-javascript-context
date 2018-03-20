@@ -7,12 +7,6 @@ use Behat\MinkExtension\Context\RawMinkContext;
 
 class JavascriptEventsContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
-    /** @BeforeStep */
-    public function beforeStep(BeforeStepScope $scope)
-    {
-        //$this->initializePendingAjaxRequestsVariable();
-    }
-
     public function initializePendingAjaxRequestsVariable() {
         $script = <<<JS
     (function() {
