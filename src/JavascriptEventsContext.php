@@ -108,7 +108,7 @@ JS;
 
     /**
      * @Given I wait for the element :arg1 to be visible
-     * @param $arg1
+     * @param string $arg1
      * @return bool
      */
     public function iWaitForElementToBeVisible($arg1): bool

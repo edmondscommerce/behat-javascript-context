@@ -11,8 +11,8 @@ class CookieContext extends RawMinkContext implements SnippetAcceptingContext
 
     /**
      * @Then I set the cookie :cookieName value to :cookieValue
-     * @param $cookieName
-     * @param $cookieValue
+     * @param string $cookieName
+     * @param string $cookieValue
      */
     public function iSetCookieValue($cookieName, $cookieValue)
     {
@@ -21,7 +21,7 @@ class CookieContext extends RawMinkContext implements SnippetAcceptingContext
 
     /**
      * @Then I delete the cookie :cookieName
-     * @param $cookieName
+     * @param string $cookieName
      */
     public function iDeleteTheCookie($cookieName)
     {

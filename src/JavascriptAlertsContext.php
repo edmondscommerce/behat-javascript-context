@@ -22,7 +22,7 @@ class JavascriptAlertsContext extends RawMinkContext
     /**
      * @Then I should see an alert asking :arg1
      * @When I see an alert containing :arg1
-     * @param $arg1
+     * @param string $arg1
      * @return string $text
      * @throws \RuntimeException
      */
@@ -57,8 +57,8 @@ class JavascriptAlertsContext extends RawMinkContext
 
     /**
      * @Then /^I press button "([^"]*)" should see an alert saying "([^"]*)"$/
-     * @param $button
-     * @param $arg1
+     * @param string $button
+     * @param string $arg1
      * @return string
      * @throws \RuntimeException
      * @throws \Behat\Mink\Exception\ElementNotFoundException
