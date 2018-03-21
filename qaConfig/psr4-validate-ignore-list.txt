@@ -1,0 +1,4 @@
+#tests/bootstrap\.php#
+#tests/phpstan-bootstrap\.php#
+#tests/assets/routers/helper\.php#
+#tests/assets/routers/router\.php#

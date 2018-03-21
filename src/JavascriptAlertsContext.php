@@ -1,9 +1,8 @@
 <?php namespace EdmondsCommerce\BehatJavascriptContext;
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\MinkExtension\Context\RawMinkContext;
-use Exception;
-use WebDriver\Exception\NoAlertOpenError;
+
+use RuntimeException;
 
 class JavascriptAlertsContext extends RawMinkContext
 {
@@ -14,20 +13,26 @@ class JavascriptAlertsContext extends RawMinkContext
      */
     public function iCancelThePopup()
     {
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->getSession()->getDriver()->getWebDriverSession()->dismiss_alert();
     }
 
     /**
      * @Then I should see an alert asking :arg1
      * @When I see an alert containing :arg1
+     * @param string $arg1
+     * @return string $text
+     * @throws \RuntimeException
      */
-    public function iShouldSeeAnAlertAsking($arg1)
+    public function iShouldSeeAnAlertAsking($arg1): string
     {
+        /** @noinspection PhpUndefinedMethodInspection */
         $text = $this->getSession()->getDriver()->getWebDriverSession()->getAlert_text();
-        if ($arg1 != $text)
-        {
-            throw new Exception('The alert\'s text "' . $text . '" does not equal' . $arg1);
+        if ($arg1 !== $text) {
+            throw new RuntimeException('The alert\'s text "' . $text . '" does not equal ' . $arg1);
         }
+
+        return $text;
     }
 
     /**
@@ -35,7 +40,7 @@ class JavascriptAlertsContext extends RawMinkContext
      */
     public function iDisableTheAlerts()
     {
-        $this->getSession()->wait(5000, 'window.alert = function() {}');
+        $this->getSession()->wait(2000, 'window.alert = function() {}');
     }
 
     /**
@@ -44,33 +49,22 @@ class JavascriptAlertsContext extends RawMinkContext
      */
     public function iAcceptThePopup()
     {
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->getSession()->getDriver()->getWebDriverSession()->accept_alert();
     }
 
     /**
      * @Then /^I press button "([^"]*)" should see an alert saying "([^"]*)"$/
+     * @param string $button
+     * @param string $arg1
+     * @return string
+     * @throws \RuntimeException
+     * @throws \Behat\Mink\Exception\ElementNotFoundException
      */
-    public function iPressButtonShouldSeeAnAlertSaying($button, $arg1)
+    public function iPressButtonShouldSeeAnAlertSaying($button, $arg1): string
     {
         $this->getSession()->getPage()->pressButton($button);
-        $text = false;
-        $ticker = 0;
-        while ($text === false) {
-            try {
-                $text = $this->getSession()->getDriver()->getWebDriverSession()->getAlert_text();
-            } catch (NoAlertOpenError $e) {
-                sleep(1);
-            }
-            $ticker++;
-            if($ticker > 10) {
-                $text='fail test';
-            }
-        }
-        $this->iAcceptThePopup();
-        if ($arg1 != $text)
-        {
-            throw new Exception('The alert\'s text "' . $text . '" does not equal' . $arg1);
-        }
-    }
 
+        return $this->iShouldSeeAnAlertAsking($arg1);
+    }
 }
