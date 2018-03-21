@@ -56,6 +56,7 @@ class JavascriptAlertsContextTest extends AbstractTestCase
 
         $this->expectException(NoAlertOpenError::class);
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->seleniumSession->getDriver()->getWebDriverSession()->getAlert_text();
     }
 
@@ -102,6 +103,7 @@ class JavascriptAlertsContextTest extends AbstractTestCase
 
         $this->expectException(NoAlertOpenError::class);
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->seleniumSession->getDriver()->getWebDriverSession()->getAlert_text();
     }
 
@@ -127,6 +129,7 @@ class JavascriptAlertsContextTest extends AbstractTestCase
         $button = 'btn';
         $expected = 'Welcome!';
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $this->assertEquals($expected, $this->context->iPressButtonShouldSeeAnAlertSaying($button, $expected));
     }
 
@@ -141,6 +144,7 @@ class JavascriptAlertsContextTest extends AbstractTestCase
 
         $this->expectException(NoAlertOpenError::class);
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $this->context->iPressButtonShouldSeeAnAlertSaying($button, $expected);
     }
 
@@ -155,6 +159,7 @@ class JavascriptAlertsContextTest extends AbstractTestCase
 
         $this->expectException(ElementNotFoundException::class);
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $this->context->iPressButtonShouldSeeAnAlertSaying($button, $expected);
     }
 }

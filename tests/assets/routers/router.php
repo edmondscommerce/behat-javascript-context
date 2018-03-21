@@ -4,11 +4,20 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 ini_set('display_errors', 1);
 
 $router = new EdmondsCommerce\MockServer\StaticRouter();
+/** @noinspection PhpUnhandledExceptionInspection */
 $router->addStaticRoute('/', __DIR__.'/html/test.html');
+/** @noinspection PhpUnhandledExceptionInspection */
 $router->addStaticRoute('/alert', __DIR__.'/html/alert.html');
+/** @noinspection PhpUnhandledExceptionInspection */
 $router->addStaticRoute('/jquery', __DIR__.'/html/jquery.html');
 
-$router->addStaticRoute('/slow-loading-js-host', __DIR__.'/html/slowpage.html');
+$router->addCallbackRoute('/slow-loading-js-host', '', function () {
+    $search = ['IP_ADDRESS'];
+    $replace = [getContainerIp()];
+    $subject = file_get_contents(__DIR__.'/html/slowpage.html');
+
+    return str_replace($search, $replace, $subject);
+});
 $router->addCallbackRoute('/slow-loading-js', '', function () {
     sleep(12);
     return file_get_contents(__DIR__ . '/html/documentWrite.js');
@@ -78,4 +87,5 @@ $router->addCallbackRoute('/jquery-and-prototypejs-ajax-slow', '', function () {
 
 $router->addRoute('/admin', 'Admin Login');
 $router->setNotFound('Not found');
+/** @noinspection PhpUnhandledExceptionInspection */
 $router->run()->send();

@@ -1,14 +1,17 @@
 <?php namespace EdmondsCommerce\BehatJavascriptContext;
 
-use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Behat\Hook\Scope\BeforeStepScope;
+
+use /** @noinspection PhpDeprecationInspection */
+    Behat\Behat\Context\SnippetAcceptingContext;
+
 use Behat\MinkExtension\Context\RawMinkContext;
 
-class JavascriptEventsContext extends RawMinkContext implements Context, SnippetAcceptingContext
+/** @noinspection PhpDeprecationInspection */
+class JavascriptEventsContext extends RawMinkContext implements SnippetAcceptingContext
 {
     public function initializePendingAjaxRequestsVariable()
     {
+        /** @noinspection Annotator */
         $script = <<<JS
     (function() {
         window.XMLHttpRequest.pendingAjaxRequests = 0;
@@ -61,12 +64,12 @@ JS;
 
         // jQuery ajax calls
         if ((bool) $this->getSession()->evaluateScript('typeof jQuery !== "undefined"')) {
-            $response = $this->getSession()->wait(10000, "0 === jQuery.active");
+            $response = $this->getSession()->wait(10000, '0 === jQuery.active');
         }
 
         // prototype.js ajax calls
         if ((bool) $this->getSession()->evaluateScript('typeof Ajax !== "undefined"')) {
-            $response = $this->getSession()->wait(10000, "0 === Ajax.activeRequestCount");
+            $response = $this->getSession()->wait(10000, '0 === Ajax.activeRequestCount');
         }
 
         return $response;
@@ -74,12 +77,12 @@ JS;
 
     public function iWaitForJqueryAjaxToFinish()
     {
-        return $this->getSession()->wait(10000, "0 === jQuery.active");
+        return $this->getSession()->wait(10000, '0 === jQuery.active');
     }
 
     public function iWaitForPrototypeJsAjaxToFinish()
     {
-        return $this->getSession()->wait(10000, "0 === Ajax.activeRequestCount");
+        return $this->getSession()->wait(10000, '0 === Ajax.activeRequestCount');
     }
 
     /**
@@ -105,8 +108,10 @@ JS;
 
     /**
      * @Given I wait for the element :arg1 to be visible
+     * @param $arg1
+     * @return bool
      */
-    public function iWaitForElementToBeVisible($arg1)
+    public function iWaitForElementToBeVisible($arg1): bool
     {
         $script = <<<JS
 (function() {
