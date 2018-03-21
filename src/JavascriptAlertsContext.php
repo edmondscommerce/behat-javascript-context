@@ -1,10 +1,8 @@
 <?php namespace EdmondsCommerce\BehatJavascriptContext;
 
-
 use Behat\MinkExtension\Context\RawMinkContext;
 
 use RuntimeException;
-
 
 class JavascriptAlertsContext extends RawMinkContext
 {

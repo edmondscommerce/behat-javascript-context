@@ -1,6 +1,5 @@
 <?php namespace EdmondsCommerce\BehatJavascriptContext;
 
-
 use /** @noinspection PhpDeprecationInspection */
     Behat\Behat\Context\SnippetAcceptingContext;
 
