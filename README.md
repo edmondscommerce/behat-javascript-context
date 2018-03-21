@@ -1,4 +1,7 @@
 # Behat HTML Context
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/155668a485344c03b483c395e7a938dd)](https://app.codacy.com/app/edmondscommerce/behat-javascript-context?utm_source=github.com&utm_medium=referral&utm_content=edmondscommerce/behat-javascript-context&utm_campaign=badger)
+
 ## By [Edmonds Commerce](https://www.edmondscommerce.co.uk)
 
 A simple Behat Context for working with HTML and navigation
