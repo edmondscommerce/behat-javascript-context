@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "behat/behat": "~3.0",
+        "behat/behat": "~3.4",
         "behat/mink": "~1.6",
         "behat/mink-extension": "~2.0"
     },
