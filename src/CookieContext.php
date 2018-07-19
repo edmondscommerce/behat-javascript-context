@@ -1,13 +1,17 @@
 <?php namespace EdmondsCommerce\BehatJavascriptContext;
 
-use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
+use /** @noinspection PhpDeprecationInspection */
+    Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\RawMinkContext;
 
-class CookieContext extends RawMinkContext implements Context, SnippetAcceptingContext {
+/** @noinspection PhpDeprecationInspection */
+class CookieContext extends RawMinkContext implements SnippetAcceptingContext
+{
 
     /**
      * @Then I set the cookie :cookieName value to :cookieValue
+     * @param string $cookieName
+     * @param string $cookieValue
      */
     public function iSetCookieValue($cookieName, $cookieValue)
     {
@@ -16,10 +20,10 @@ class CookieContext extends RawMinkContext implements Context, SnippetAcceptingC
 
     /**
      * @Then I delete the cookie :cookieName
+     * @param string $cookieName
      */
     public function iDeleteTheCookie($cookieName)
     {
         $this->getSession()->setCookie($cookieName, null);
     }
-
 }

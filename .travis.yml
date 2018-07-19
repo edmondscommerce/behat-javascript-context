@@ -1,0 +1,28 @@
+sudo: required
+dist: trusty
+addons:
+  chrome: stable
+before_install:
+- google-chrome-stable --headless --disable-gpu --window-size=1920,1080 --start-maximised
+  http://localhost &
+language: php
+git:
+  depth: false
+php:
+- 7.0
+- 7.1
+- 7.2
+- hhvm
+matrix:
+  allow_failures:
+  - php: hhvm
+before_script:
+- sudo chown root /opt/google/chrome/chrome-sandbox
+- sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+- bash -x .travis.bash
+script: phpUnitQuickTests=0 ./bin/qa
+notifications:
+  slack:
+    on_success: change
+    rooms:
+      - secure: a5Nhb+1RkDQQGGfePawbBP9FA4p7kI9VPcyxqpxbTk3RwVLl+hoqGVxB4a2BaqMRS/4qWzCNGV/J/3SZx5HYAdkA8Cwl0VtugKaBbwpWvUmRG0uHJHmn8F5bmLjslXbdkz6jJopNq4dk7m0VSYN6V4LjWBWfUmYZQqXJvv+nEbEeFFjl3Oldtsylas1WfPJvr0Q+6HLz25XklkyUjCw0UBv30+Gf8egLPEXv69N2lOowKMygevwmUa20BSivUcJ4KMec13xagA0s3Fn02JXG3oN5TzirlinkpbEGHwrsFwoayxj8kuDB/OUlOzuDtaMVgq2MQFYmY7FDxIH7/UZcdf2R69qsWRlyiWvz8oTqklexkpi42LwgMhFEsT5onUC1ui1kzN0bWKqxHbxxewcocVxslNUTsUSThDDvi/cY9wLF4ml675JqDgTytokRcG1SSzY5Jg7lzXdQAANQrxbKJ2/DWsOQCXv2sdo8EzfpUMIUJFvYv+8P23N5lWPIEuzhoMVYw1BA0HWdaIjW+gqG6Yy0P0cBHSMD149fczXu8AOsHQkG/VhLw2daUNTN29IEBFarjq7XcYJZiIYCuE9HpSpEmKPuquJkwovxlFum+fqsX5AJ/Mt+Ryfx9BiBg3eQkcraP4ncYuzP28fhR6cDZtF9W+FR20xfTiS08uCRRDU=

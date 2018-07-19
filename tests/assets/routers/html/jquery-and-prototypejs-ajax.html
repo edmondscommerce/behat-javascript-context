@@ -1,0 +1,32 @@
+<!doctype html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<div id="myDiv">NOT AJAX TEXT</div>
+<div id="myDiv2">NOT AJAX TEXT</div>
+<script>
+    var $j = jQuery.noConflict();
+
+    $j(document).ready(function() {
+        $j.get("http://IP_ADDRESS:8080/jquery-ajax-response", function (data) {
+            $j('#myDiv').html(data);
+        });
+    });
+
+    new Ajax.Request('http://IP_ADDRESS:8080/prototypejs-ajax-response', {
+        onSuccess: function(response) {
+            document.getElementById('myDiv2').innerHTML = response.responseText;
+        }
+    });
+</script>
+</body>
+</html>

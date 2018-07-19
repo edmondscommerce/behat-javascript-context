@@ -1,0 +1,22 @@
+<!doctype html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
+</head>
+<body>
+<div id="myDiv">NOT AJAX TEXT</div>
+<script>
+    new Ajax.Request('http://IP_ADDRESS:8080/prototypejs-ajax-slow-response', {
+        onSuccess: function(response) {
+            document.getElementById('myDiv').innerHTML = response.responseText;
+        }
+    });
+</script>
+</body>
+</html>
