@@ -50,5 +50,12 @@ class JavascriptEventsContext extends RawMinkContext implements Context, Snippet
         $this->getSession()->wait(5000, 'jQuery("' . $arg1 . '").is(\':visible\')');
     }
 
-    
+    /**
+     * Then I get the scrollY position
+     */
+    public function iGetTheScrollYPosition(){
+
+        $this->getSession()->evaluateScript('return scrollY;');
+    }
+
 }
